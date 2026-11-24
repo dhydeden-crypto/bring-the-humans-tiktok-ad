@@ -51,6 +51,36 @@
 // Revision 7b: the success log now also names the ad version (v7), so a
 // run's output shows which ad the entry ships, not just the video id.
 //
+// Revision 8: this is a resubmit of the same v7 ad — the TikTok URL is
+// unchanged (https://www.tiktok.com/@0xdhyy/video/7711631324951497992).
+// The v7 entry scored 31,500 views (rank #7) but its score fell to 0 at
+// 17:34 WIB when make.fun's latest check found the video "gone" for US
+// visitors (statusCode 10231 cross_border_violation), so the views no
+// longer counted. Resubmitting the same video to trigger a fresh intake
+// in case the restriction has lifted. No video, URL, or logic changed.
+//
+// Revision 8b: the success log now also names the resubmit (v7 resubmit),
+// so a run's output shows this entry is a same-video resubmit, not a new ad.
+//
+// Revision 9: this entry now ships the new v8 ad, posted 2026-11-24 from
+// @azzazazzzzzz (https://www.tiktok.com/@azzazazzzzzz/video/7711701822578248978),
+// replacing the v7 video 7711631324951497992. The v7 entry scored 31,500
+// views (rank #7) but its score fell to 0 at 17:34 WIB when make.fun's
+// latest check found the video "gone" for US visitors (statusCode 10231
+// cross_border_violation), so the views no longer counted. The v8 ad is
+// a full rebuild of the place and the people: outer space instead of a
+// race track, the agent is a magenta rocket with a white star (not a race
+// car), the human is an astronaut on the Moon (not a race spectator), and
+// the live rank climbs #128 -> #41 -> #1 with the headline "woke up to
+// #1". It keeps the same clean angle — no income promises, no $ signs,
+// no coins — and runs 30s.
+//
+// The VIDEO.json this entry ships now holds that v8 address, so the gate
+// accepts it as it stands.
+//
+// Revision 9b: the success log now also names the ad version (v8), so a
+// run's output shows which ad the entry ships, not just the video id.
+//
 // Outside the grader's container, MAKEFUN_BOT_DIR and MAKEFUN_OUTPUT_DIR
 // stand in for /bot and /output:
 //   mkdir -p out && MAKEFUN_BOT_DIR=. MAKEFUN_OUTPUT_DIR=out node main.ts
@@ -82,7 +112,7 @@ try {
     throw new Error('VIDEO.json url must be a TikTok video address: https://www.tiktok.com/@<handle>/video/<id>');
   }
   copyFileSync(join(BOT_DIR, 'VIDEO.json'), join(OUTPUT_DIR, 'VIDEO.json'));
-  console.log(`VIDEO.json OK: @${match[1]} video ${match[2]} (v7 race ad)`);
+  console.log(`VIDEO.json OK: @${match[1]} video ${match[2]} (v8 rocket ad)`);
 } catch (err) {
   console.error(`VIDEO.json could not be copied from ${BOT_DIR}: ${(err as Error).message}`);
   process.exit(1);
