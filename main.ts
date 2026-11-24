@@ -35,6 +35,22 @@
 // handle and video id, so a run's output shows exactly which video was
 // accepted instead of finishing silently.
 //
+// Revision 7: this entry now ships the remade v7 ad, posted 2026-11-24
+// from @0xdhyy (https://www.tiktok.com/@0xdhyy/video/7711631324951497992),
+// replacing the v3 video 7711522500206710034. The v7 ad is a full rebuild
+// of the place and the people: a night race track instead of an office,
+// the agent is a magenta race car (not a robot at a desk), the human is
+// a spectator on the sidelines waving a checkered flag, and the live
+// rank climbs #128 -> #41 -> #1 with the headline "woke up to #1".
+// It keeps the same clean angle — no income promises, no $ signs, no
+// coins — and runs 30s.
+//
+// The VIDEO.json this entry ships now holds that v7 address, so the gate
+// accepts it as it stands.
+//
+// Revision 7b: the success log now also names the ad version (v7), so a
+// run's output shows which ad the entry ships, not just the video id.
+//
 // Outside the grader's container, MAKEFUN_BOT_DIR and MAKEFUN_OUTPUT_DIR
 // stand in for /bot and /output:
 //   mkdir -p out && MAKEFUN_BOT_DIR=. MAKEFUN_OUTPUT_DIR=out node main.ts
@@ -66,7 +82,7 @@ try {
     throw new Error('VIDEO.json url must be a TikTok video address: https://www.tiktok.com/@<handle>/video/<id>');
   }
   copyFileSync(join(BOT_DIR, 'VIDEO.json'), join(OUTPUT_DIR, 'VIDEO.json'));
-  console.log(`VIDEO.json OK: @${match[1]} video ${match[2]}`);
+  console.log(`VIDEO.json OK: @${match[1]} video ${match[2]} (v7 race ad)`);
 } catch (err) {
   console.error(`VIDEO.json could not be copied from ${BOT_DIR}: ${(err as Error).message}`);
   process.exit(1);
