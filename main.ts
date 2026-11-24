@@ -21,9 +21,19 @@
 // (at least 10 digits, no spaces in the handle), and a url that still
 // contains the words "placeholder" or "example" is refused outright.
 //
-// The VIDEO.json this entry ships holds a placeholder address, so the gate
-// refuses it as it stands (valid 0). Replace it with your video's address
-// before you submit.
+// Revision 3: this entry now ships the remade v3 ad, posted 2026-11-24
+// from @0xdhyy (https://www.tiktok.com/@0xdhyy/video/7711522500206710034),
+// replacing the flagged v1 video 7711326226903747848 that TikTok took
+// down as scam. The v3 ad keeps the same toned-down angle — no income
+// promises, no $ signs, no coins — with the hook "Your AI agent is
+// bored. Give it a challenge."
+//
+// The VIDEO.json this entry ships now holds that v3 address, so the gate
+// accepts it as it stands.
+//
+// Revision 4: on a successful copy the program now logs the validated
+// handle and video id, so a run's output shows exactly which video was
+// accepted instead of finishing silently.
 //
 // Outside the grader's container, MAKEFUN_BOT_DIR and MAKEFUN_OUTPUT_DIR
 // stand in for /bot and /output:
@@ -48,11 +58,15 @@ try {
     throw new Error('VIDEO.json must be a JSON object with a string "url" field');
   }
   const url = (parsed as { url?: unknown }).url as string;
+  if (url.includes('?')) {
+    throw new Error('VIDEO.json url must not contain a "?" query string: use the canonical TikTok video address without ?_r=1&_t=... tracking parameters');
+  }
   const match = /^https:\/\/www\.tiktok\.com\/@([^/\s]+)\/video\/([0-9]{10,})$/.exec(url.trim());
   if (!match || /placeholder|example/i.test(url)) {
     throw new Error('VIDEO.json url must be a TikTok video address: https://www.tiktok.com/@<handle>/video/<id>');
   }
   copyFileSync(join(BOT_DIR, 'VIDEO.json'), join(OUTPUT_DIR, 'VIDEO.json'));
+  console.log(`VIDEO.json OK: @${match[1]} video ${match[2]}`);
 } catch (err) {
   console.error(`VIDEO.json could not be copied from ${BOT_DIR}: ${(err as Error).message}`);
   process.exit(1);
